@@ -41,9 +41,18 @@ Tech Stack
     - App.logger.log("All profiles processed. Now starting Media Editing and other tasks.")
     // Remaining tasks like media editing and other tasks can be done here after all profiles are processed.
 
+#### Variables available on App
+
+- db: instance of Database System
+- logger: instance of Logging System
+- profilesQueue: array of profiles to be processed
+- currentProfile: currently processed profile
+- browser: instance of BrowserController
+- page: instance of Puppeteer Page
+
 ## TaskController.runTasks(App)
 
-    -
+    - tasksQueue / tasksList / tasksArray = App.currentProfile.dueTasks
 
 # Notable Points:
 
