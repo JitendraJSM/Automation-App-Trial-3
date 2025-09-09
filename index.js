@@ -9,10 +9,13 @@ async function main() {
 
     await app.getControllers();
 
-    await app.logger.info("=== Instagram Automation Started (New Architecture) ===");
+    await app.logger.info(
+      "=== Instagram Automation Started (New Architecture) ==="
+    );
 
     // Run automation tasks
-    const result = await taskController.runAutomationTask();
+    const automator = new Automator();
+    const result = await automator.automate(app);
 
     await logger.info("Automation completed:", result);
 

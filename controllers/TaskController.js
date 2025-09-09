@@ -75,7 +75,9 @@ class TaskController {
   // }
   async runAutomationTask(app, task) {
     try {
-      app.logger.info("Starting automation task execution");
+      app.logger.info(
+        "Starting automation task execution in app.taskController.runAutomationTask() function in TaskController.js"
+      );
     } catch (error) {
       app.logger.error("Automation task execution failed", error);
       throw error;
@@ -84,14 +86,27 @@ class TaskController {
   async processProfileTasks(profile) {
     try {
       // Initialize services for this profile
-      this.instagramService = new InstagramService(this.profileRepository, this.logger);
+      this.instagramService = new InstagramService(
+        this.profileRepository,
+        this.logger
+      );
       await this.instagramService.initialize(profile);
 
-      this.scrapingService = new ScrapingService(this.profileRepository, this.logger);
+      this.scrapingService = new ScrapingService(
+        this.profileRepository,
+        this.logger
+      );
       await this.scrapingService.initialize(profile);
 
-      this.mediaDownloadService = new MediaDownloadService(this.profileRepository, this.scrapingService, this.logger);
-      this.mediaEditingService = new MediaEditingService(this.profileRepository, this.logger);
+      this.mediaDownloadService = new MediaDownloadService(
+        this.profileRepository,
+        this.scrapingService,
+        this.logger
+      );
+      this.mediaEditingService = new MediaEditingService(
+        this.profileRepository,
+        this.logger
+      );
 
       this.currentProfile = profile;
 
@@ -140,7 +155,10 @@ class TaskController {
         results: taskResults,
       };
     } catch (error) {
-      await this.logger.error(`Failed to process tasks for profile: ${profile.userName}`, error);
+      await this.logger.error(
+        `Failed to process tasks for profile: ${profile.userName}`,
+        error
+      );
       throw error;
     } finally {
       if (this.instagramService) {
@@ -200,7 +218,10 @@ class TaskController {
       case "like":
         const userToLike = args[0];
         const likeOptions = args[1] || {};
-        return await this.instagramService.likeUserPosts(userToLike, likeOptions);
+        return await this.instagramService.likeUserPosts(
+          userToLike,
+          likeOptions
+        );
 
       case "updateUserData":
         const forceUpdate = args[0] === true || args[0] === "true";
@@ -235,7 +256,10 @@ class TaskController {
       case "targetScraper":
         const targetUserName = args[0];
         const options = args[1] || {};
-        return await this.scrapingService.scrapeUserProfile(targetUserName, options);
+        return await this.scrapingService.scrapeUserProfile(
+          targetUserName,
+          options
+        );
 
       case "scrapeMetadata":
         const userName = args[0];
@@ -260,12 +284,18 @@ class TaskController {
       case "downloadUserMedia":
         const userName = args[0];
         const options = args[1] || {};
-        return await this.mediaDownloadService.downloadUserMedia(userName, options);
+        return await this.mediaDownloadService.downloadUserMedia(
+          userName,
+          options
+        );
 
       case "downloadBatch":
         const userNames = args[0];
         const batchOptions = args[1] || {};
-        return await this.mediaDownloadService.downloadMultipleUsers(userNames, batchOptions);
+        return await this.mediaDownloadService.downloadMultipleUsers(
+          userNames,
+          batchOptions
+        );
 
       default:
         throw new Error(`Unknown media download action: ${actionName}`);
@@ -281,24 +311,38 @@ class TaskController {
       case "processUserMedia":
         const userName = args[0];
         const options = args[1] || {};
-        return await this.mediaEditingService.processUserMedia(userName, options);
+        return await this.mediaEditingService.processUserMedia(
+          userName,
+          options
+        );
 
       case "processBatch":
         const userNames = args[0];
         const batchOptions = args[1] || {};
-        return await this.mediaEditingService.processBatchMedia(userNames, batchOptions);
+        return await this.mediaEditingService.processBatchMedia(
+          userNames,
+          batchOptions
+        );
 
       case "processImages":
         const inputPath = args[0];
         const outputPath = args[1];
         const imageOptions = args[2] || {};
-        return await this.mediaEditingService.processImages(inputPath, outputPath, imageOptions);
+        return await this.mediaEditingService.processImages(
+          inputPath,
+          outputPath,
+          imageOptions
+        );
 
       case "processVideos":
         const videoInputPath = args[0];
         const videoOutputPath = args[1];
         const videoOptions = args[2] || {};
-        return await this.mediaEditingService.processVideos(videoInputPath, videoOutputPath, videoOptions);
+        return await this.mediaEditingService.processVideos(
+          videoInputPath,
+          videoOutputPath,
+          videoOptions
+        );
 
       default:
         throw new Error(`Unknown media editing action: ${actionName}`);
@@ -331,7 +375,9 @@ class TaskController {
 
   async changeIPAddress() {
     // Placeholder for your airplane mode IP changing functionality
-    await this.logger.info("IP address change requested (not implemented in new architecture yet)");
+    await this.logger.info(
+      "IP address change requested (not implemented in new architecture yet)"
+    );
     await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate delay
   }
 
@@ -340,10 +386,15 @@ class TaskController {
     try {
       const task = new Task(taskData);
       await this.profileRepository.addTaskToProfile(userName, task.toJSON());
-      await this.logger.info(`Task added to profile ${userName}: ${task.getFullActionName()}`);
+      await this.logger.info(
+        `Task added to profile ${userName}: ${task.getFullActionName()}`
+      );
       return { success: true };
     } catch (error) {
-      await this.logger.error(`Failed to add task to profile ${userName}`, error);
+      await this.logger.error(
+        `Failed to add task to profile ${userName}`,
+        error
+      );
       throw error;
     }
   }
@@ -354,7 +405,10 @@ class TaskController {
       await this.logger.info(`Task removed from profile ${userName}`);
       return { success: true };
     } catch (error) {
-      await this.logger.error(`Failed to remove task from profile ${userName}`, error);
+      await this.logger.error(
+        `Failed to remove task from profile ${userName}`,
+        error
+      );
       throw error;
     }
   }
@@ -362,7 +416,9 @@ class TaskController {
   // =============== PROFILE MANAGEMENT ===============
   async createNewProfile(profileData) {
     try {
-      const profile = await this.profileRepository.createNewProfile(profileData);
+      const profile = await this.profileRepository.createNewProfile(
+        profileData
+      );
       await this.logger.info(`New profile created: ${profile.userName}`);
       return profile;
     } catch (error) {

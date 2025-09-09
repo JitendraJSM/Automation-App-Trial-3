@@ -1,0 +1,22 @@
+{
+  "name": "automation-app-trial-3",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JitendraJSM/Automation-App-Trial-3.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JitendraJSM/Automation-App-Trial-3/issues"
+  },
+  "homepage": "https://github.com/JitendraJSM/Automation-App-Trial-3#readme",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^17.2.2"
+  }
+}
